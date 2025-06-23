@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
   app.enableCors({
-    origin: ['https://user-manegement-front.vercel.app/'],
+    origin: ['https://user-manegement-front.vercel.app'],
     credentials: true,
   });
   const config = new DocumentBuilder()
