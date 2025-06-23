@@ -9,7 +9,4 @@ export class CreateUserDTO {
 
   @ApiProperty({ example: 'joao1234' })
   password!: string;
-
-  @ApiProperty({ example: 'admin' })
-  role?: 'admin' | 'user';
 }

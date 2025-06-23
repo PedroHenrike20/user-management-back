@@ -12,7 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       url: process.env.DB_URL,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       autoLoadEntities: true,
-      synchronize: false,
+      synchronize: true,
     }),
     UsersModule,
     AuthModule,
