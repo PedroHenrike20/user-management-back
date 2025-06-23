@@ -27,6 +27,10 @@ export class User {
   @ApiProperty({ example: 'joao1234' })
   password!: string;
 
+  @Column({ default: true })
+  @ApiProperty({ example: true })
+  isEnable!: boolean;
+
   @Column({ default: 'user' })
   @ApiProperty({ example: 'admin' })
   role!: 'user' | 'admin';

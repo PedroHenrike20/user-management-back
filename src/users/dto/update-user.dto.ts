@@ -10,6 +10,9 @@ export class UpdateUserDTO {
   @ApiProperty({ example: 'joao1234' })
   password!: string;
 
+  @ApiProperty({ example: true })
+  isEnable?: boolean;
+
   @ApiProperty({ example: 'asc' })
   role?: 'admin' | 'user';
 }

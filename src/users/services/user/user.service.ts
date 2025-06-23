@@ -25,7 +25,6 @@ export class UserService {
     const hashedPassword = await bcrypt.hash(userDTO.password, 10);
     const user = this.userRepository.create({
       ...userDTO,
-      role: 'user',
       email: normalizedEmail,
       password: hashedPassword,
     });
@@ -75,6 +74,7 @@ export class UserService {
     if (userDTO.password) {
       userDTO.password = await bcrypt.hash(userDTO.password, 10);
     }
+
     Object.assign(user, userDTO);
     return this.userRepository.save(user);
   }
