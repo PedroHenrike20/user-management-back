@@ -71,7 +71,8 @@ export class UserService {
     if (!user) {
       throw new Error('User not found');
     }
-    if (userDTO.password) {
+
+    if (userDTO.password && userDTO.password.trim() !== '') {
       userDTO.password = await bcrypt.hash(userDTO.password, 10);
     }
 
