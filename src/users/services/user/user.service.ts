@@ -81,6 +81,14 @@ export class UserService {
       updatedFields.email = userDTO.email;
     }
 
+    if (userDTO.role !== undefined) {
+      updatedFields.role = userDTO.role;
+    }
+
+    if (userDTO.isEnable !== undefined) {
+      updatedFields.isEnable = userDTO.isEnable;
+    }
+
     if (userDTO.password && userDTO.password.trim() !== '') {
       updatedFields.password = await bcrypt.hash(userDTO.password, 10);
     }
