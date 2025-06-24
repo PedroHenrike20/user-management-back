@@ -71,12 +71,21 @@ export class UserService {
     if (!user) {
       throw new Error('User not found');
     }
+    const updatedFields: Partial<User> = {};
 
-    if (userDTO.password && userDTO.password.trim() !== '') {
-      userDTO.password = await bcrypt.hash(userDTO.password, 10);
+    if (userDTO.name) {
+      updatedFields.name = userDTO.name;
     }
 
-    Object.assign(user, userDTO);
+    if (userDTO.email) {
+      updatedFields.email = userDTO.email;
+    }
+
+    if (userDTO.password && userDTO.password.trim() !== '') {
+      updatedFields.password = await bcrypt.hash(userDTO.password, 10);
+    }
+
+    Object.assign(user, updatedFields);
     return this.userRepository.save(user);
   }
 }
