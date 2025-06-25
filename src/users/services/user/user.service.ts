@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/users/entities/user.entity/user.entity';
 import { CreateUserDTO } from 'src/users/dto/create-user.dto';
@@ -20,7 +25,7 @@ export class UserService {
       email: normalizedEmail,
     });
     if (existingUser) {
-      throw new Error('User with this email already exists');
+      throw new ConflictException('Já existe um usuário com este e-mail');
     }
     const hashedPassword = await bcrypt.hash(userDTO.password, 10);
     const user = this.userRepository.create({
@@ -69,16 +74,19 @@ export class UserService {
   async update(id: string, userDTO: UpdateUserDTO): Promise<User> {
     const user = await this.findOne(id);
     if (!user) {
-      throw new Error('User not found');
+      throw new NotFoundException('Usuário não encontrado');
     }
-    const updatedFields: Partial<User> = {};
 
-    if (userDTO.name) {
-      updatedFields.name = userDTO.name;
+    if (!userDTO.name || userDTO.name.trim() === '') {
+      throw new BadRequestException('O nome é obrigatório');
     }
+
+    const updatedFields: Partial<User> = {
+      name: userDTO.name.trim(),
+    };
 
     if (userDTO.email) {
-      updatedFields.email = userDTO.email;
+      updatedFields.email = userDTO.email.toLowerCase().trim();
     }
 
     if (userDTO.role !== undefined) {
