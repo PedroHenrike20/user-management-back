@@ -19,7 +19,12 @@ import { UpdateUserDTO } from 'src/users/dto/update-user.dto';
 import { UserService } from 'src/users/services/user/user.service';
 import { RequestExpress } from 'express';
 import { FilterUserDto } from 'src/users/dto/filter-user.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { User } from 'src/users/entities/user.entity/user.entity';
 
 @ApiTags('users')
@@ -36,6 +41,7 @@ export class UserController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
   @Get('auth/users')
+  @ApiBearerAuth('access-token')
   @ApiOperation({ summary: 'Listar todos usuários' })
   @ApiResponse({
     status: 200,
@@ -48,6 +54,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get('auth/user/:id')
+  @ApiBearerAuth('access-token')
   @ApiOperation({ summary: 'Buscar por um usuário pelo Id' })
   @ApiResponse({
     status: 200,
@@ -59,6 +66,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Patch('auth/user/:id')
+  @ApiBearerAuth('access-token')
   @ApiOperation({ summary: 'Atualizar usuário' })
   @ApiResponse({
     status: 200,
@@ -72,6 +80,7 @@ export class UserController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
   @Delete('auth/user/:id')
+  @ApiBearerAuth('access-token')
   @ApiOperation({ summary: 'Excluir usuário' })
   @ApiResponse({
     status: 200,
@@ -83,6 +92,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get('auth/filtered/users')
+  @ApiBearerAuth('access-token')
   @ApiOperation({ summary: 'Ordernar a lista de usuários' })
   @ApiResponse({
     status: 200,
@@ -95,6 +105,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get('auth/profile')
+  @ApiBearerAuth('access-token')
   @ApiOperation({ summary: 'Carregar informações do usuário autenticado' })
   @ApiResponse({
     status: 200,
